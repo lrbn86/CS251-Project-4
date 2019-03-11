@@ -13,10 +13,11 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 	string line;
 	string operationType;
 	getline(inputfile, operationType);
+	
+	Rhymer<string> rh; // Rhymer is implemented with generics template
 
 	if (operationType == "1")
 	{
-		Rhymer rh;
 		int N;
 		getline(inputfile, line);
 		N = stoi(line);
@@ -28,22 +29,32 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			rh.insertWord(word);
 			i++;
 		}
-		// Reverse each word
-		rh.reverseWords();
-		// Perform quicksort
-		rh.qsort();
-		rh.reverseWords();
+		rh.performRhymeOrderOperation();
+		// Output to file
 		for (auto w : rh.getWords()) {
 			outputfile << w << endl;
 		}
-		// Reverse each word again to their original state
-		// The current words vector will be the correct rhyme order
 	}
 	else if (operationType == "2")
 	{
-		outputfile << "Doing Suffix Sharing Operation" << endl;
+		int K = 0; // K is the minimum number of words that ends with the suffixes that we must identify.
+		getline(inputfile, line);
+		K = stoi(line);
+		int N;
+		getline(inputfile, line);
+		N = stoi(line);
+		int i = 0;
+		string word;
+		while (i < N) {
+			getline(inputfile, word);
+			rh.insertWord(word);
+			i++;
+		}
 		// Perform rhyme order operation
-		// Iterate through the rhyme ordered vector and find suffixes that has minimum k words
+		rh.performRhymeOrderOperation();
+		// Iterate through the rhyme ordered vector
+		// Use hashtable/hashmap to identify the suffixes that has at least k words.
+		// In the hashtable/hashmap, keys are the suffixes and the values are lists of words
 	}
 }
 
