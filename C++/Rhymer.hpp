@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <list>
-#include <algorithm>
+// #include <algorithm>
 using namespace std;
 
 template <typename S>
