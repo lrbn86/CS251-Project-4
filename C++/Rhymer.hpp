@@ -17,65 +17,26 @@ public:
 	Rhymer() {}
 
 	// Quicksort algorithm that sorts in place
-	void qsort(list<S> seq)
+	void qsort(vector<S> &listOfWords, int a, int b)
 	{
-		// TODO: Need to think about whether to use a vector or a list...
-		// TODO: This is more tougher than I thought.
-		vector<S> sequence = ;
 
-		if (sequence.size() <= 1)
-		{ // List is already sorted
-			return;
-		}
+		if (a >= b) return;
+		S pivot = listOfWords[b];
+		int l = a;
+		int r = b - 1;
 
-		// Choose pivot to be the last element
-		S pivot = sequence.back();
-
-		list<S> e_list; // elements in this list are equal to the pivot
-		list<S> l_list; // elements in this list are less than the pivot
-		list<S> g_list; // elements in this list are greater than the pivot
-
-		// Dividing the list into the three lists
-		while (!sequence.empty())
+		while (l <= r) 
 		{
-			if (sequence.back() < pivot)
+			while (l <= r && listOfWords[l] <= pivot) l++;
+			while (r >= l && listOfWords[r] >= pivot) r--;
+			if (l < r)
 			{
-				l_list.push_back(sequence.back());
-				sequence.pop_back();
-			}
-			else if (sequence.back() == pivot)
-			{
-				e_list.push_back(sequence.back());
-				sequence.pop_back();
-			}
-			else
-			{
-				g_list.push_back(sequence.back());
-				sequence.pop_back();
+				swapC(listOfWords[l], listOfWords[r]);
 			}
 		}
-
-		// Apply recursion with the three lists
-		qsort(l_list);
-		qsort(g_list);
-
-		while (!l_list.empty()) 
-		{
-			sequence.push_back(l_list.front());
-			l_list.pop_front();
-		}
-
-		while (!e_list.empty())
-		{
-			sequence.push_back(e_list.front());
-			e_list.pop_front();
-		}
-
-		while (!g_list.empty())
-		{
-			sequence.push_back(g_list.front());
-			g_list.pop_front();
-		}
+		swapC(listOfWords[l], listOfWords[b]);
+		qsort(listOfWords, a, l-1);
+		qsort(listOfWords, l+1, b);
 
 	}
 
@@ -102,12 +63,18 @@ public:
 	void performRhymeOrderOperation()
 	{
 		reverseWords();
-		qsort(this->words);
+		qsort(this->words, 0, this->words.size()-1);
 		reverseWords();
 	}
 
 private:
 	vector<S> words;
+	template <class T> void swapC (T& a, T& b)
+	{
+		T c(a);
+		a = b;
+		b = c;
+	}
 };
 
 #endif // Rhymer_hpp
