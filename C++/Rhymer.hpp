@@ -67,6 +67,16 @@ public:
 		reverseWords();
 	}
 
+	vector<string> getSuffixes (string word)
+	{
+		vector<string> ret;
+		for (int l = word.length()-1; l >= 0; l--)
+		{
+			ret.push_back(word.substr(l, word.length()));
+		}
+		return ret;
+	}
+
 private:
 	vector<S> words;
 	template <class T> void swapC (T& a, T& b)

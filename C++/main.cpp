@@ -2,6 +2,7 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <map>
 
 #include "Node.hpp"
 #include "BinarySearchTree.hpp"
@@ -50,11 +51,29 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			rh.insertWord(word);
 			i++;
 		}
-		// Perform rhyme order operation
-		rh.performRhymeOrderOperation();
-		// Iterate through the rhyme ordered vector
+		// Iterate through the word list
 		// Use hashtable/hashmap to identify the suffixes that has at least k words.
 		// In the hashtable/hashmap, keys are the suffixes and the values are lists of words
+		map<string, vector<string>> table;
+		
+		// Get the suffixes
+		for (int i = 0; i < rh.getWords().size(); i++) {
+			string word = rh.getWords()[i];
+			// TODO: There is a whitespace at the end of "trampit".
+			// Should we remove this whitespace, does it matter?
+			// Sort of matters because we need to insert keys
+			// And we don't want to insert an empty suffix
+			cout << "The string" << word << "has the following suffixes: " << endl;
+			vector<string> z = rh.getSuffixes(word);
+			for (auto o : z) {
+				cout << o << endl;
+			}
+			cout << endl;
+		}
+
+
+		// The suffixes should be print in increasing order
+		// The lists of word for each suffix will also be in rhyme order
 	}
 }
 
@@ -73,10 +92,6 @@ int main(int argc, char *argv[])
 	if (argc == 3)
 	{
 		inputfile.open(argv[1]);
-		// TODO: MODIFIED IO
-		// if (inputfile.fail()) {
-		// 	cout << "FILE DOES NOT EXIST" << endl;
-		// }
 		outputfile.open(argv[2]);
 	}
 	else
