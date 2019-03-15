@@ -14,7 +14,7 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 	string line;
 	string operationType;
 	getline(inputfile, operationType);
-	
+
 	Rhymer<string> rh; // Rhymer is implemented with generics template
 
 	if (operationType == "1")
@@ -25,14 +25,16 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 		int i = 0;
 		string word;
 		// Read in words
-		while (i < N) {
+		while (i < N)
+		{
 			getline(inputfile, word);
 			rh.insertWord(word);
 			i++;
 		}
 		rh.performRhymeOrderOperation();
 		// Output to file
-		for (auto w : rh.getWords()) {
+		for (auto w : rh.getWords())
+		{
 			outputfile << w << endl;
 		}
 	}
@@ -46,7 +48,8 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 		N = stoi(line);
 		int i = 0;
 		string word;
-		while (i < N) {
+		while (i < N)
+		{
 			getline(inputfile, word);
 			// Remove whitespaces from string
 			word.erase(remove_if(word.begin(), word.end(), ::isspace), word.end());
@@ -57,16 +60,46 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 		// Use hashtable/hashmap to identify the suffixes that has at least k words.
 		// In the hashtable/hashmap, keys are the suffixes and the values are lists of words
 		map<string, vector<string>> table;
-		
+
 		// Get the suffixes
-		for (int i = 0; i < rh.getWords().size(); i++) {
+		for (int i = 0; i < rh.getWords().size(); i++)
+		{
 			string word = rh.getWords()[i];
-			vector<string> z = rh.getSuffixes(word);
-			for (auto o : z) {
-				cout << o << endl;
+			vector<string> suffixesArray = rh.getSuffixes(word);
+			for (const auto suffix : suffixesArray)
+			{
+				// Insert suffixes into map, but the word list will be initially empty
+				table.insert(std::pair<string, vector<string>>(suffix, {}));
 			}
 		}
 
+		// Iterate through the rhyme order list
+		// If the word in the rhyme order list contains the suffix (ending)
+		// then insert the word into the map with its respective suffix
+		rh.performRhymeOrderOperation();
+		for (int i = 0; i < rh.getWords().size(); i++)
+		{
+			string word = rh.getWords()[i];
+			// Iterate through the map and determine whether word ends with the suffix
+			for (const auto pair : table)
+			{
+				string suffix = pair.first;
+				if (rh.hasSuffix(word, suffix)) {
+					// Insert word into the table
+					table[suffix].push_back(word);
+				}
+			}
+		}
+
+		// Print out map
+		for (const auto pair : table) {
+			string suffix = pair.first;
+			cout << "The words that ends with -" << suffix << ": " << endl;
+			for (const auto word : pair.second) {
+				cout << word << endl;
+			}
+			cout << endl;
+		}
 
 		// The suffixes should be print in increasing order
 		// The lists of word for each suffix will also be in rhyme order
