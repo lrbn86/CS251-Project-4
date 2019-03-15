@@ -48,6 +48,8 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 		string word;
 		while (i < N) {
 			getline(inputfile, word);
+			// Remove whitespaces from string
+			word.erase(remove_if(word.begin(), word.end(), ::isspace), word.end());
 			rh.insertWord(word);
 			i++;
 		}
@@ -59,16 +61,10 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 		// Get the suffixes
 		for (int i = 0; i < rh.getWords().size(); i++) {
 			string word = rh.getWords()[i];
-			// TODO: There is a whitespace at the end of "trampit".
-			// Should we remove this whitespace, does it matter?
-			// Sort of matters because we need to insert keys
-			// And we don't want to insert an empty suffix
-			cout << "The string" << word << "has the following suffixes: " << endl;
 			vector<string> z = rh.getSuffixes(word);
 			for (auto o : z) {
 				cout << o << endl;
 			}
-			cout << endl;
 		}
 
 
