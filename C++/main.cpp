@@ -38,6 +38,7 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 	}
 	else if (operationType == "2")
 	{
+		// THIS IS JUST A TEST.
 		int K = 0; // K is the minimum number of words that ends with the suffixes that we must identify.
 		getline(inputfile, line);
 		K = stoi(line);
