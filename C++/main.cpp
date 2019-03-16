@@ -65,12 +65,8 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			i++;
 		}
 
-		// NOTE: part1input2suffix6-7-8.txt has very large inputs
-		// It should take about a minute to complete
-		// Don't think we can handle with the current algorithm that we have.
-		// TODO: Check for redundant iterations...combine steps...
-
 		// Print out map
+		// TODO: Code below produces some sort of segfault.. Hmm
 		for (const auto pair : table)
 		{
 			string suffix = pair.first;
@@ -82,20 +78,22 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 				// outputfile << suffix << " -> ";
 				// outputfile << "[";
 				// The lists of word for each suffix will also be in rhyme order
+
+				// TODO: Culprit found. The qsort is accessing/writing restricted memory and thus causing a segfault. Check qsort implementation.
 				rh.qsort(words, 0, words.size() - 1);
-				for (auto word : words)
-				{
-					if (first)
-					{
-						first = false;
-					}
-					else
-					{
-						// outputfile << ", ";
-					}
-					// outputfile << word;
-					cout << word << endl;
-				}
+				// for (auto word : words)
+				// {
+				// 	if (first)
+				// 	{
+				// 		first = false;
+				// 	}
+				// 	else
+				// 	{
+				// 		// outputfile << ", ";
+				// 	}
+				// 	// outputfile << word;
+				// 	// cout << word << endl;
+				// }
 				// outputfile << "]";
 				// outputfile << endl;
 			}
