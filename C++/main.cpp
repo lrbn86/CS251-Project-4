@@ -40,6 +40,7 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 	}
 	else if (operationType == "2")
 	{
+		map<string, vector<string>> table;
 		int K = 0; // K is the minimum number of words that ends with the suffixes that we must identify.
 		getline(inputfile, line);
 		K = stoi(line);
@@ -53,43 +54,15 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			getline(inputfile, word);
 			// Remove whitespaces from string
 			word.erase(remove_if(word.begin(), word.end(), ::isspace), word.end());
-			rh.insertWord(word);
-			i++;
-		}
-		// Iterate through the word list
-		// Use hashtable/hashmap to identify the suffixes that has at least k words.
-		// In the hashtable/hashmap, keys are the suffixes and the values are lists of words
-		map<string, vector<string>> table;
-
-		// Get the suffixes
-		for (int i = 0; i < rh.getWords().size(); i++)
-		{
-			string word = rh.getWords()[i];
+			// Get the suffixes of the word
 			vector<string> suffixesArray = rh.getSuffixes(word);
-			for (const auto suffix : suffixesArray)
+			for (auto suffix : suffixesArray)
 			{
-				// Insert suffixes into map, but the word list will be initially empty
-				table.insert(std::pair<string, vector<string>>(suffix, {}));
+				// Insert suffix into table
+				// The wordList will have the word itself be the first element
+				table[suffix].push_back(word);
 			}
-		}
-
-		// Iterate through the rhyme order list
-		// If the word in the rhyme order list contains the suffix (ending)
-		// then insert the word into the map with its respective suffix
-		rh.performRhymeOrderOperation();
-		for (int i = 0; i < rh.getWords().size(); i++)
-		{
-			string word = rh.getWords()[i];
-			// Iterate through the map and determine whether word ends with the suffix
-			for (const auto pair : table)
-			{
-				string suffix = pair.first;
-				if (rh.hasSuffix(word, suffix))
-				{
-					// Insert word into the table
-					table[suffix].push_back(word);
-				}
-			}
+			i++;
 		}
 
 		// NOTE: part1input2suffix6-7-8.txt has very large inputs
@@ -106,8 +79,8 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			if (words.size() >= K)
 			{
 				// The suffixes should be printed in increasing order, forunately map already sorts it.
-				outputfile << suffix << " -> ";
-				outputfile << "[";
+				// outputfile << suffix << " -> ";
+				// outputfile << "[";
 				// The lists of word for each suffix will also be in rhyme order
 				rh.qsort(words, 0, words.size() - 1);
 				for (auto word : words)
@@ -118,12 +91,13 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 					}
 					else
 					{
-						outputfile << ", ";
+						// outputfile << ", ";
 					}
-					outputfile << word;
+					// outputfile << word;
+					cout << word << endl;
 				}
-				outputfile << "]";
-				outputfile << endl;
+				// outputfile << "]";
+				// outputfile << endl;
 			}
 		}
 	}
@@ -170,3 +144,17 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
+
+
+
+/*
+
+	Suffix Sharing Algorithm
+
+	1. Use one loop to insert all of the possible suffixes into the table associated with the word itself being the first element in the word list
+
+
+
+
+*/

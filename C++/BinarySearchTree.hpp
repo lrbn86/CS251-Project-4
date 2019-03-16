@@ -80,6 +80,7 @@ public:
 	*/
 	int dist(int key1, int key2)
 	{
+		return 0;
 	}
 
 	// RB Tree, modify code to handle RB insertion, probably on the other insert
@@ -93,7 +94,7 @@ public:
 	*/
 	int getBlackHeight(int key)
 	{
-
+		return 0;
 	}
 };
 
