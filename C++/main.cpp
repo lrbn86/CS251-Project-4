@@ -91,14 +91,34 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			}
 		}
 
+
+		// NOTE: part1input2suffix6-7-8.txt has very large inputs
+		// It should take about a minute to complete
+		// Don't think we can handle with the current algorithm that we have.
+		// TODO: Check for redundant iterations...combine steps...
+
+
 		// Print out map
 		for (const auto pair : table) {
 			string suffix = pair.first;
-			cout << "The words that ends with -" << suffix << ": " << endl;
-			for (const auto word : pair.second) {
-				cout << word << endl;
+			vector<string> words = pair.second;
+			bool first = true;
+			if (words.size() >= K) {
+				outputfile << suffix << " -> ";
+				outputfile << "[";
+				rh.qsort(words, 0, words.size() - 1);
+				for (auto word : words) 
+				{
+					if (first) {
+						first = false;
+					} else {
+						outputfile << ", ";
+					}
+					outputfile << word;
+				}
+				outputfile << "]";
+				outputfile << endl;
 			}
-			cout << endl;
 		}
 
 		// The suffixes should be print in increasing order

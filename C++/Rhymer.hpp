@@ -100,10 +100,3 @@ private:
 };
 
 #endif // Rhymer_hpp
-
-/*
-	WINDOWS ONLY
-	NOTE: Use mingw32-make.exe to compile and build.
-	// Use program.exe to run...
-
-*/
