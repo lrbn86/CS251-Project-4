@@ -107,6 +107,7 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 				outputfile << suffix << " -> ";
 				outputfile << "[";
 				rh.qsort(words, 0, words.size() - 1);
+				// Trying to fix things here...
 				for (auto word : words) 
 				{
 					if (first) {
