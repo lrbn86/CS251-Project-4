@@ -84,36 +84,40 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			for (const auto pair : table)
 			{
 				string suffix = pair.first;
-				if (rh.hasSuffix(word, suffix)) {
+				if (rh.hasSuffix(word, suffix))
+				{
 					// Insert word into the table
 					table[suffix].push_back(word);
 				}
 			}
 		}
 
-
 		// NOTE: part1input2suffix6-7-8.txt has very large inputs
 		// It should take about a minute to complete
 		// Don't think we can handle with the current algorithm that we have.
 		// TODO: Check for redundant iterations...combine steps...
 
-
 		// Print out map
-		for (const auto pair : table) {
+		for (const auto pair : table)
+		{
 			string suffix = pair.first;
 			vector<string> words = pair.second;
 			bool first = true;
-			if (words.size() >= K) {
+			if (words.size() >= K)
+			{
+				// The suffixes should be printed in increasing order, forunately map already sorts it.
 				outputfile << suffix << " -> ";
 				outputfile << "[";
+				// The lists of word for each suffix will also be in rhyme order
 				rh.qsort(words, 0, words.size() - 1);
-				// Trying to fix things here...
-				// Let's try this one more time.
-				for (auto word : words) 
+				for (auto word : words)
 				{
-					if (first) {
+					if (first)
+					{
 						first = false;
-					} else {
+					}
+					else
+					{
 						outputfile << ", ";
 					}
 					outputfile << word;
@@ -122,9 +126,6 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 				outputfile << endl;
 			}
 		}
-
-		// The suffixes should be print in increasing order
-		// The lists of word for each suffix will also be in rhyme order
 	}
 }
 
