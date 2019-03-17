@@ -75,27 +75,27 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			if (words.size() >= K)
 			{
 				// The suffixes should be printed in increasing order, forunately map already sorts it.
-				// outputfile << suffix << " -> ";
-				// outputfile << "[";
+				outputfile << suffix << " -> ";
+				outputfile << "[";
 				// The lists of word for each suffix will also be in rhyme order
 
 				// TODO: Culprit found. The qsort is accessing/writing restricted memory and thus causing a segfault. Check qsort implementation.
 				rh.qsort(words, 0, words.size() - 1);
-				// for (auto word : words)
-				// {
-				// 	if (first)
-				// 	{
-				// 		first = false;
-				// 	}
-				// 	else
-				// 	{
-				// 		// outputfile << ", ";
-				// 	}
-				// 	// outputfile << word;
-				// 	// cout << word << endl;
-				// }
-				// outputfile << "]";
-				// outputfile << endl;
+				for (auto word : words)
+				{
+					if (first)
+					{
+						first = false;
+					}
+					else
+					{
+						outputfile << ", ";
+					}
+					outputfile << word;
+					cout << word << endl;
+				}
+				outputfile << "]";
+				outputfile << "\r\n";
 			}
 		}
 	}
