@@ -19,9 +19,10 @@ public:
 	// Quicksort algorithm that sorts in place
 	void qsort(vector<S> &listOfWords, int a, int b)
 	{
-
 		if (a >= b)
+		{
 			return;
+		}
 		S pivot = listOfWords[b];
 		int l = a;
 		int r = b - 1;

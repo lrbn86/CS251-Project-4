@@ -65,12 +65,14 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			i++;
 		}
 
+		// With a size of more than 4553, the call stack will overflow and cause segfault...
 		// Print out map
 		// TODO: Code below produces some sort of segfault.. Hmm
 		for (const auto pair : table)
 		{
 			string suffix = pair.first;
 			vector<string> words = pair.second;
+			// rh.qsort(words, 0, words.size()-1); // TODO: SEGFAULTLLLLLTLTLT
 			bool first = true;
 			if (words.size() >= K)
 			{
@@ -80,7 +82,7 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 				// The lists of word for each suffix will also be in rhyme order
 
 				// TODO: Culprit found. The qsort is accessing/writing restricted memory and thus causing a segfault. Check qsort implementation.
-				rh.qsort(words, 0, words.size() - 1);
+				// sort(words.begin(), words.end()); // Definitely the custom qsort.
 				for (auto word : words)
 				{
 					if (first)
@@ -92,10 +94,10 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 						outputfile << ", ";
 					}
 					outputfile << word;
-					cout << word << endl;
+					// cout << word << endl;
 				}
 				outputfile << "]";
-				outputfile << "\r\n";
+				outputfile << "\n";
 			}
 		}
 	}
