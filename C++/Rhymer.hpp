@@ -2,12 +2,10 @@
 #define Rhymer_hpp
 
 #include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string>
 #include <vector>
 #include <list>
-#include <algorithm>
+// #include <algorithm>
 using namespace std;
 
 template <typename S>
@@ -17,30 +15,14 @@ public:
 	Rhymer() {}
 
 	// Quicksort algorithm that sorts in place
-	void qsort(vector<S> &listOfWords, int a, int b)
-	{
-		if (a >= b)
+	void qsort(vector<S> &words, int left, int right)
+	{	
+		if (left < right)
 		{
-			return;
+			int index = partition(words, left, right);
+			qsort(words, left, index-1);
+			qsort(words, index, right);
 		}
-		S pivot = listOfWords[b];
-		int l = a;
-		int r = b - 1;
-
-		while (l <= r)
-		{
-			while (l <= r && listOfWords[l] <= pivot)
-				l++;
-			while (r >= l && listOfWords[r] >= pivot)
-				r--;
-			if (l < r)
-			{
-				swapC(listOfWords[l], listOfWords[r]);
-			}
-		}
-		swapC(listOfWords[l], listOfWords[b]);
-		qsort(listOfWords, a, l - 1);
-		qsort(listOfWords, l + 1, b);
 	}
 
 	void insertWord(string word)
@@ -89,6 +71,10 @@ public:
 		return false;
 	}
 
+	void clearWords() {
+		this->words.clear();
+	}
+
 private:
 	vector<S> words;
 	template <class T>
@@ -97,6 +83,26 @@ private:
 		T c(a);
 		a = b;
 		b = c;
+	}
+	int partition(vector<S> &words, int left, int right)
+	{
+		S pivot = words[right];
+		int high = right;
+
+		while (left < high)
+		{
+			while (left < high && words[left] < pivot)
+			{
+				left++;
+			}
+			while (left < high && words[high] >= pivot)
+			{
+				high--;
+			}
+			std::swap(words[left],words[high]);
+		}
+		std::swap(words[left],words[right]);
+		return left;
 	}
 };
 
