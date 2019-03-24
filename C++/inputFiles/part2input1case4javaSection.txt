@@ -11,5 +11,5 @@ insertRB 8
 insertRB 9
 insertRB 10
 Bheight 1
-Bheight 10
+Bheight 4
 levelorder

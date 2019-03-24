@@ -9,6 +9,7 @@
 #include "Rhymer.hpp"
 using namespace std;
 
+// TODO: DONE!
 void read_part_1(ifstream &inputfile, ofstream &outputfile)
 {
 	string line;
@@ -73,7 +74,7 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 			string suffix = pair.first;
 
 			vector<string> words = pair.second;
-			
+
 			bool first = true;
 			if (words.size() >= K)
 			{
@@ -104,8 +105,61 @@ void read_part_1(ifstream &inputfile, ofstream &outputfile)
 
 void read_part_2(ifstream &inputfile, ofstream &outputfile)
 {
-	//handle input, output from file
-	// Binary Search
+	BinarySearchTree bst;
+	string line;
+	int N; // n lines to follow
+	getline(inputfile, line);
+	N = stoi(line);
+	outputfile << "N: " << N << endl;
+	while (getline(inputfile, line))
+	{
+		istringstream is(line);
+		string operation;
+		getline(is, operation, ' ');
+
+		outputfile << operation << endl;
+
+		// Basic Operations, 10pts
+		if (operation == "insert")
+		{
+			// "insert" needs one argument
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+			bst.insertKey(key);
+		}
+		else if (operation == "delete")
+		{
+			// "delete" needs one argument
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+		}
+		else if (operation == "search")
+		{
+			// "search" needs one argument
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+		}
+		else if (operation == "range")
+		{
+			// "rangeSum" needs two arguments
+			int left, right;
+			getline(is, operation, ' ');
+			left = stoi(operation);
+			getline(is, operation, ' ');
+			right = stoi(operation);
+
+		}
+		else if (operation == "height")
+		{
+			// "height" needs one argument
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+		}
+	}
 }
 
 int main(int argc, char *argv[])
@@ -143,9 +197,6 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
-
-
-
 
 /*
 
