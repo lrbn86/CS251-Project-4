@@ -7,7 +7,12 @@
 #include <list>
 // #include <algorithm>
 using namespace std;
-
+/*
+	Note to grading instructor:
+		Most of the test cases have different line endings such as "\r\n" or "\n" or even just "\r" (refer to part2input1case2.txt for "postorder")
+		The current program will fail some test cases if the lines do not have consistent ending.
+		For now, the program will try to match the given output files exactly.
+*/
 template <typename S>
 class Rhymer
 {

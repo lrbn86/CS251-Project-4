@@ -4,10 +4,16 @@
 #include "Node.hpp"
 #include <vector>
 #include <stack>
+#include <queue>
 using namespace std;
 
 // Assume keys are integers and unique
-
+/*
+	Note to grading instructor:
+		Most of the test cases have different line endings such as "\r\n" or "\n" or even just "\r" (refer to part2input1case2.txt for "postorder")
+		The current program will fail some test cases if the lines do not have consistent ending.
+		For now, the program will try to match the given output files exactly.
+*/
 class BinarySearchTree
 {
 	Node<int> *rootNode;
@@ -154,7 +160,6 @@ public:
 	}
 
 	/*
-	// TODO:
 		4.
 		Return the summation of all the keys in the BST falls in the range [left, right] inclusive.
 		Print "none" to file if no elements found.
@@ -222,11 +227,11 @@ public:
 			Node<int> *e = nodes.top();
 			nodes.pop();
 			order.insert(order.begin(), e->key());
-			if (e->left != NULL)
+			if (e->left)
 			{
 				nodes.push(e->left);
 			}
-			if (e->right != NULL)
+			if (e->right)
 			{
 				nodes.push(e->right);
 			}
@@ -236,41 +241,76 @@ public:
 	}
 
 	/*
-		7.
+		7. TODO:
 		Get the Breadth First or Level order traversal of the BST.
 		Use a queue to implement level order
 	*/
-	void levelorder()
+	vector<int> levelorder()
 	{
 		// If list is empty, print "none"
+		vector<int> order;
+		queue<Node<int>*> nodes;
+
+		if (rootNode == NULL) {
+			return order;
+		}
+
+		nodes.push(rootNode);
+
+		while (!nodes.empty())
+		{
+			Node<int> *e = nodes.front();
+			order.push_back(e->key()); // The order is reversed. So we need to push back instead of inserting to front..
+			nodes.pop();
+
+			if (e->left)
+			{
+				nodes.push(e->left);
+			}
+			if (e->right)
+			{
+				nodes.push(e->right);
+			}
+		}
+
+		return order;
 	}
 
 	/*
-		8.
+		8. TODO:
 	*/
 	int LCA(int key1, int key2)
 	{
 		return 0;
 	}
 
-	// 9. Ceil and 10.Floor
+	// 9. Ceil TODO:
+	int ceil()
+	{
+		return 0;
+	}
+
+	// 10. Floor TODO:
+	int floor() {
+		return 0;
+	}
 
 	/*
-		11.
+		11. TODO:
 	*/
 	int dist(int key1, int key2)
 	{
 		return 0;
 	}
 
-	// RB Tree, modify code to handle RB insertion, probably on the other insert
+	// TODO:
 	void insertRB(int key)
 	{
 		// Refer to DSA book
 	}
 
 	/*
-		12.
+		12. TODO:
 	*/
 	int getBlackHeight(int key)
 	{
