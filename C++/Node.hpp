@@ -25,6 +25,7 @@ public:
   void setKey(const K& k) { _key = k; }
   Node *left;
   Node *right;
+  Node *parent;
   bool hasChildren() {
     if (left == NULL && right == NULL)
     {

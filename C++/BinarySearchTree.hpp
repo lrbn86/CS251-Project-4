@@ -17,13 +17,14 @@ using namespace std;
 class BinarySearchTree
 {
 	Node<int> *rootNode;
+
 private:
 	void qsort(vector<int> &words, int left, int right)
-	{	
+	{
 		if (left < right)
 		{
 			int index = partition(words, left, right);
-			qsort(words, left, index-1);
+			qsort(words, left, index - 1);
 			qsort(words, index, right);
 		}
 	}
@@ -42,15 +43,63 @@ private:
 			{
 				high--;
 			}
-			std::swap(words[left],words[high]);
+			std::swap(words[left], words[high]);
 		}
-		std::swap(words[left],words[right]);
+		std::swap(words[left], words[right]);
 		return left;
 	}
-	void remedyDoubleRed()
+	void remedyDoubleRed(Node<int> *node)
 	{
+		// Restructure tree after normally inserting
+		Node<int> *v = node->parent;
+		if (v->color == "black")
+		{
+			return;
+		}
 
+		if ((v->left && v->left->color == "black") && (v->right && v->right->color == "black"))
+		{
+			// Restructure here
+			v->color = "black";
+			v->left->color = "red";
+			v->right->color = "red";
+		}
+		else
+		{
+			v->color = "black";
+			v->left->color = "black";
+			v->right->color = "black";
+			Node<int> *u = v->parent;
+			if (u == rootNode)
+			{
+				return;
+			}
+			u->color = "red";
+			remedyDoubleRed(u);
+		}
 	}
+	Node<int> *getNode(int key)
+	{
+		Node<int> *e = rootNode;
+		while (e != NULL)
+		{
+			if (e->key() == key)
+			{
+				return e;
+			}
+			// Traverse
+			if (key < e->key())
+			{
+				e = e->left;
+			}
+			else if (key > e->key())
+			{
+				e = e->right;
+			}
+		}
+		return NULL;
+	}
+
 public:
 	BinarySearchTree()
 	{
@@ -113,10 +162,12 @@ public:
 		if (key < e->key())
 		{
 			e->left = newNode;
+			e->left->parent = e;
 		}
 		else if (key > e->key())
 		{
 			e->right = newNode;
+			e->right->parent = e;
 		}
 	}
 
@@ -202,13 +253,15 @@ public:
 		int sum = 0;
 		vector<int> elements = postorder();
 		vector<int> keys;
-		for (auto key : elements) {
+		for (auto key : elements)
+		{
 			if (left <= key && key <= right)
 			{
 				keys.push_back(key);
 			}
 		}
-		for (auto key : keys) {
+		for (auto key : keys)
+		{
 			sum += key;
 		}
 		return sum;
@@ -222,7 +275,8 @@ public:
 		Node<int> *e = rootNode;
 		while (e != NULL)
 		{
-			if (e->key() == key) {
+			if (e->key() == key)
+			{
 				return e->height;
 			}
 			// Traverse
@@ -246,7 +300,7 @@ public:
 	{
 		// If list is empty, print "none"
 		vector<int> order;
-		stack<Node<int>*> nodes;
+		stack<Node<int> *> nodes;
 
 		if (rootNode == NULL)
 		{
@@ -269,7 +323,7 @@ public:
 				nodes.push(e->right);
 			}
 		}
-		
+
 		return order;
 	}
 
@@ -282,9 +336,10 @@ public:
 	{
 		// If list is empty, print "none"
 		vector<int> order;
-		queue<Node<int>*> nodes;
+		queue<Node<int> *> nodes;
 
-		if (rootNode == NULL) {
+		if (rootNode == NULL)
+		{
 			return order;
 		}
 
@@ -310,32 +365,56 @@ public:
 	}
 
 	/*
-		8. TODO:
+		8.
 	*/
-	int LCA(int key1, int key2)
+	Node<int> *LCA(int key1, int key2)
 	{
-		return 0;
+		Node<int> *e = rootNode;
+		while (e != NULL) {
+			if (key1 > e->key() && key2 > e->key())
+			{
+				e = e->right;
+			}
+			else if (key1 < e->key() && key2 < e->key())
+			{
+				e = e->left;
+			}
+			else
+			{
+				return e;
+			}
+		}
+		return NULL;
+	}
+
+	int LCA_KEY (int key1, int key2) {
+		return LCA(key1, key2)->key();
 	}
 
 	// 9. Ceil
 	int ceil(int key)
 	{
 		vector<int> keys = postorder();
-		qsort(keys, 0, keys.size()-1);
-		for (auto k: keys) {
-			if (k >= key) {
+		qsort(keys, 0, keys.size() - 1);
+		for (auto k : keys)
+		{
+			if (k >= key)
+			{
 				return k;
 			}
-		}	
+		}
 		return 0;
 	}
 
 	// 10. Floor
-	int floor(int key) {
+	int floor(int key)
+	{
 		vector<int> keys = postorder();
-		qsort(keys, 0, keys.size()-1);
-		for (auto k: keys) {
-			if (k <= key) {
+		qsort(keys, 0, keys.size() - 1);
+		for (auto k : keys)
+		{
+			if (k <= key)
+			{
 				return k;
 			}
 		}
@@ -358,7 +437,7 @@ public:
 		{
 			rootNode = new Node<int>;
 			rootNode->setKey(key);
-			rootNode->height = 0; // The root always has a height of zero
+			rootNode->height = 0;			 // The root always has a height of zero
 			rootNode->color = "black"; // root is always black
 			return;
 		}
@@ -366,7 +445,7 @@ public:
 		Node<int> *newNode = new Node<int>;
 		newNode->setKey(key);
 		newNode->color = "red";
-		
+
 		Node<int> *e = rootNode;
 
 		while (e != NULL)
@@ -399,16 +478,13 @@ public:
 		if (key < e->key())
 		{
 			e->left = newNode;
+			e->left->parent = e;
 		}
 		else if (key > e->key())
 		{
 			e->right = newNode;
+			e->right->parent = e;
 		}
-
-		
-
-
-
 	}
 
 	/*

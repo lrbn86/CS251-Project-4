@@ -245,16 +245,28 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 		}
 		else if (operation == "lca")
 		{
-			outputfile << "lca" << endl;
+			int key1, key2;
+			getline(is, operation, ' ');
+			key1 = stoi(operation);
+			getline(is, operation, ' ');
+			key2 = stoi(operation);
+			if (bst.searchKey(key1) && bst.searchKey(key2))
+			{
+				outputfile << bst.LCA_KEY(key1, key2) << endl;
+			}
+			else
+			{
+				outputfile << "none" << endl;
+			}
+			
 		}
 		else if (operation == "floor")
 		{
-			// TODO: Assume that 0 denotes that no such key exists
 			int key;
 			getline(is, operation, ' ');
 			key = stoi(operation);
 			int result = bst.floor(key);
-			if (result != 0)
+			if (bst.searchKey(result))
 			{
 				outputfile << bst.floor(key) << endl;
 			}
@@ -266,12 +278,11 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 		}
 		else if (operation == "ceil")
 		{
-			// TODO: Assume that 0 denotes that no such key exists
 			int key;
 			getline(is, operation, ' ');
 			key = stoi(operation);
 			int result = bst.ceil(key);
-			if (result != 0)
+			if (bst.searchKey(result))
 			{
 				outputfile << bst.ceil(key) << endl;
 			}
@@ -314,7 +325,7 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			int key;
 			getline(is, operation, ' ');
 			key = stoi(operation);
-			outputfile << "Bheight" << endl;
+			outputfile << bst.getBlackHeight(key) << endl;
 		}
 	}
 }
