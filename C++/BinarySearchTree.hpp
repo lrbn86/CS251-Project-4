@@ -8,11 +8,12 @@ using namespace std;
 class BinarySearchTree
 {
 	// TODO:
-	Node<int> *root = new Node<int>; // Allocate
-	// Bus error due to Undefined Behavior.. Need to allocate first.
+	Node<int> *rootNode;
 
 public:
-	BinarySearchTree() {}
+	BinarySearchTree() {
+		rootNode = NULL;
+	}
 	/*
 	// TODO:
 		1.
@@ -22,9 +23,59 @@ public:
 	*/
 	void insertKey(int key)
 	{
-		(*root).setKey(key);
-		(*root).printKey();
+		// Search for a leaf node. A leaf node is defined as a node that has no children.
+		// The first node to be inserted will become the root node
+		if (rootNode == NULL) {
+			rootNode = new Node<int>;
+			(*rootNode).setKey(key);
+			return;
+		}
+
+		// Create a new node and set its key
+		Node<int> *newNode = new Node<int>;
+		(*newNode).setKey(key);
+
+		Node<int> *e = rootNode; // Provides a mean to traverse the tree
+		
+		// TODO: I think I have it so far... Try to implement other methods and
+		// we shall see...
+		while (e != NULL) {
+			// Check whether we reached a leaf node
+			if (!(*e).hasChildren())
+			{
+				// Leaf node is reached because this node has no children
+				break;
+			}
+			if (key < (*e).key()) {
+				cout << "Looking at left child." << endl;
+				if ((*e).left == NULL)
+				{
+					break;
+				}
+				e = (*e).left;
+			}
+			else if (key > (*e).key())
+			{
+				cout << "Looking at right child." << endl;
+				if ((*e).right == NULL)
+				{
+					break;
+				}
+				e = (*e).right;
+			}
+		}
+
+		// If the while-loop terminates, then we reached a leaf node
+		if (key < (*e).key()) {
+			(*e).left = newNode;
+		}
+		else if (key > (*e).key())
+		{
+			(*e).right = newNode;
+		}
+
 	}
+
 
 	/*
 		// TODO:

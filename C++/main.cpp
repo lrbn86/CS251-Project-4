@@ -127,6 +127,7 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			getline(is, operation, ' ');
 			key = stoi(operation);
 			bst.insertKey(key);
+			bst.printKeys();
 		}
 		else if (operation == "delete")
 		{
