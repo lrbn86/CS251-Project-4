@@ -245,18 +245,76 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 		}
 		else if (operation == "lca")
 		{
+			outputfile << "lca" << endl;
 		}
 		else if (operation == "floor")
 		{
+			// TODO: Assume that 0 denotes that no such key exists
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+			int result = bst.floor(key);
+			if (result != 0)
+			{
+				outputfile << bst.floor(key) << endl;
+			}
+			else
+			{
+				outputfile << "none" << endl;
+			}
+			
 		}
 		else if (operation == "ceil")
 		{
+			// TODO: Assume that 0 denotes that no such key exists
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+			int result = bst.ceil(key);
+			if (result != 0)
+			{
+				outputfile << bst.ceil(key) << endl;
+			}
+			else
+			{
+				outputfile << "none" << endl;
+			}
 		}
 		else if (operation == "dist")
 		{
+			int key1, key2;
+			getline(is, operation, ' ');
+			key1 = stoi(operation);
+			getline(is, operation, ' ');
+			key2 = stoi(operation);
+
+			int h1, h2;
+
+			if (bst.searchKey(key1) && bst.searchKey(key2)) {
+				h1 = bst.height(key1);	
+				h2 = bst.height(key2);
+				cout << "The height of " << key1 << " is " << h1 << endl;
+				cout << "The height of " << key2 << " is " << h2 << endl;
+				outputfile << h1 + h2 << endl;
+			}
+			else
+			{
+				outputfile << "none" << endl;
+			}
 		}
 		else if (operation == "insertRB")
 		{
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+			bst.insertRB(key);
+		}
+		else if (operation == "Bheight")
+		{
+			int key;
+			getline(is, operation, ' ');
+			key = stoi(operation);
+			outputfile << "Bheight" << endl;
 		}
 	}
 }

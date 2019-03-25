@@ -1,6 +1,6 @@
 #ifndef Node_hpp
 #define Node_hpp
-
+#include <string>
 using namespace std;
 // Assume keys and values are the same
 /*
@@ -19,7 +19,8 @@ public:
     left = NULL;
     right = NULL;
   }
-  int height;
+  int height=0;
+  string color="";
   const K& key() const { return _key; }
   void setKey(const K& k) { _key = k; }
   Node *left;

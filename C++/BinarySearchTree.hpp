@@ -17,7 +17,40 @@ using namespace std;
 class BinarySearchTree
 {
 	Node<int> *rootNode;
+private:
+	void qsort(vector<int> &words, int left, int right)
+	{	
+		if (left < right)
+		{
+			int index = partition(words, left, right);
+			qsort(words, left, index-1);
+			qsort(words, index, right);
+		}
+	}
+	int partition(vector<int> &words, int left, int right)
+	{
+		int pivot = words[right];
+		int high = right;
 
+		while (left < high)
+		{
+			while (left < high && words[left] < pivot)
+			{
+				left++;
+			}
+			while (left < high && words[high] >= pivot)
+			{
+				high--;
+			}
+			std::swap(words[left],words[high]);
+		}
+		std::swap(words[left],words[right]);
+		return left;
+	}
+	void remedyDoubleRed()
+	{
+
+	}
 public:
 	BinarySearchTree()
 	{
@@ -241,7 +274,7 @@ public:
 	}
 
 	/*
-		7. TODO:
+		7.
 		Get the Breadth First or Level order traversal of the BST.
 		Use a queue to implement level order
 	*/
@@ -284,14 +317,28 @@ public:
 		return 0;
 	}
 
-	// 9. Ceil TODO:
-	int ceil()
+	// 9. Ceil
+	int ceil(int key)
 	{
+		vector<int> keys = postorder();
+		qsort(keys, 0, keys.size()-1);
+		for (auto k: keys) {
+			if (k >= key) {
+				return k;
+			}
+		}	
 		return 0;
 	}
 
-	// 10. Floor TODO:
-	int floor() {
+	// 10. Floor
+	int floor(int key) {
+		vector<int> keys = postorder();
+		qsort(keys, 0, keys.size()-1);
+		for (auto k: keys) {
+			if (k <= key) {
+				return k;
+			}
+		}
 		return 0;
 	}
 
@@ -307,6 +354,61 @@ public:
 	void insertRB(int key)
 	{
 		// Refer to DSA book
+		if (rootNode == NULL)
+		{
+			rootNode = new Node<int>;
+			rootNode->setKey(key);
+			rootNode->height = 0; // The root always has a height of zero
+			rootNode->color = "black"; // root is always black
+			return;
+		}
+
+		Node<int> *newNode = new Node<int>;
+		newNode->setKey(key);
+		newNode->color = "red";
+		
+		Node<int> *e = rootNode;
+
+		while (e != NULL)
+		{
+			// Check whether we reached a leaf node
+			if (!e->hasChildren())
+			{
+				// Leaf node is reached because this node has no children
+				break;
+			}
+			if (key < e->key())
+			{
+				if ((*e).left == NULL) // Edge case
+				{
+					break;
+				}
+				e = e->left;
+			}
+			else if (key > e->key())
+			{
+				if (e->right == NULL) // Edge case
+				{
+					break;
+				}
+				e = e->right;
+			}
+		}
+
+		// If the while-loop terminates, then we reached a leaf node
+		if (key < e->key())
+		{
+			e->left = newNode;
+		}
+		else if (key > e->key())
+		{
+			e->right = newNode;
+		}
+
+		
+
+
+
 	}
 
 	/*
