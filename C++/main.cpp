@@ -252,11 +252,11 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			key2 = stoi(operation);
 			if (bst.searchKey(key1) && bst.searchKey(key2))
 			{
-				outputfile << bst.LCA_KEY(key1, key2) << endl;
+				outputfile << bst.LCA_KEY(key1, key2) << "\r\n";
 			}
 			else
 			{
-				outputfile << "none" << endl;
+				outputfile << "none" << "\r\n";
 			}
 			
 		}
@@ -268,11 +268,11 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			int result = bst.floor(key);
 			if (bst.searchKey(result))
 			{
-				outputfile << bst.floor(key) << endl;
+				outputfile << bst.floor(key) << "\r\n";
 			}
 			else
 			{
-				outputfile << "none" << endl;
+				outputfile << "none" << "\r\n";
 			}
 			
 		}
@@ -284,11 +284,11 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			int result = bst.ceil(key);
 			if (bst.searchKey(result))
 			{
-				outputfile << bst.ceil(key) << endl;
+				outputfile << bst.ceil(key) << "\r\n";
 			}
 			else
 			{
-				outputfile << "none" << endl;
+				outputfile << "none" << "\r\n";
 			}
 		}
 		else if (operation == "dist")
@@ -306,7 +306,7 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 				// h2 = bst.height(key2);
 				// cout << "The height of " << key1 << " is " << h1 << endl;
 				// cout << "The height of " << key2 << " is " << h2 << endl;
-				outputfile << bst.dist(key1, key2) << endl;
+				outputfile << bst.dist(key1, key2) << "\r\n";
 			}
 			else
 			{
