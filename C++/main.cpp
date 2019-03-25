@@ -203,15 +203,16 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 				bool first = true;
 				for (auto key : keys)
 				{
-					if (first)
-					{
-						first = false;
-					}
-					else
-					{
-						outputfile << " ";
-					}
-					outputfile << key;
+					outputfile << key << " ";
+					// if (first)
+					// {
+					// 	first = false;
+					// }
+					// else
+					// {
+					// 	outputfile << " ";
+					// }
+					// outputfile << key;
 				}
 			}
 			outputfile << "\r\n"; // Note: part2input1case2.txt has inconsistent ending for postorder...
@@ -228,15 +229,16 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 				bool first = true;
 				for (auto key : keys)
 				{
-					if (first)
-					{
-						first = false;
-					}
-					else
-					{
-						outputfile << " ";
-					}
-					outputfile << key;
+					outputfile << key << " ";
+					// if (first)
+					// {
+					// 	first = false;
+					// }
+					// else
+					// {
+					// 	outputfile << " ";
+					// }
+					// outputfile << key;
 				}
 			}
 			outputfile << "\r\n";
