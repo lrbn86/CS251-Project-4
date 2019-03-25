@@ -299,14 +299,14 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			getline(is, operation, ' ');
 			key2 = stoi(operation);
 
-			int h1, h2;
+			// int h1, h2;
 
 			if (bst.searchKey(key1) && bst.searchKey(key2)) {
-				h1 = bst.height(key1);	
-				h2 = bst.height(key2);
-				cout << "The height of " << key1 << " is " << h1 << endl;
-				cout << "The height of " << key2 << " is " << h2 << endl;
-				outputfile << h1 + h2 << endl;
+				// h1 = bst.height(key1);	
+				// h2 = bst.height(key2);
+				// cout << "The height of " << key1 << " is " << h1 << endl;
+				// cout << "The height of " << key2 << " is " << h2 << endl;
+				outputfile << bst.dist(key1, key2) << endl;
 			}
 			else
 			{

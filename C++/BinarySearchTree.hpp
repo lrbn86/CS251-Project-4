@@ -100,6 +100,23 @@ private:
 		return NULL;
 	}
 
+int getLvl(Node<int> *root, int key, int lvl)
+{
+	if (root == NULL)
+	{
+		return -1;
+	}
+	if (root->key() == key) {
+		return lvl;
+	}
+	int left = getLvl(root->left, key, lvl+1);
+	if (left == -1)
+	{
+		return getLvl(root->right, key, lvl+1);
+	}
+	return left;
+}
+
 public:
 	BinarySearchTree()
 	{
@@ -426,7 +443,11 @@ public:
 	*/
 	int dist(int key1, int key2)
 	{
-		return 0;
+		Node<int> *e = rootNode;
+		Node<int> *lca = LCA(key1, key2);
+		int dist1 = getLvl(lca, key1, 0);
+		int dist2 = getLvl(lca, key2, 0);
+		return dist1+dist2;
 	}
 
 	// TODO:
