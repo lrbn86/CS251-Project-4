@@ -116,6 +116,8 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 		istringstream is(line);
 		string operation;
 		getline(is, operation, ' ');
+		outputfile << operation << endl;
+
 		// Basic Operations, 10pts
 		if (operation == "insert")
 		{
@@ -181,34 +183,35 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 				outputfile << "none" << "\r\n";
 			}
 		}
-		else if (operation == "postorder")
+		else if (operation == "postorder\r")
 		{
-
+			outputfile << "WHAT" << endl;
+			cout << "WHATS" << endl;
 		}
 		else if (operation == "levelorder")
 		{
-
+			outputfile << "levelorderdfdsfsd" << endl;
 		}
-		else if (operation == "lca") 
-		{
+		// else if (operation == "lca") 
+		// {
 
-		}
-		else if (operation == "floor")
-		{
+		// }
+		// else if (operation == "floor")
+		// {
 
-		}
-		else if (operation == "ceil")
-		{
+		// }
+		// else if (operation == "ceil")
+		// {
 
-		}
-		else if (operation == "dist")
-		{
+		// }
+		// else if (operation == "dist")
+		// {
 
-		}
-		else if (operation == "insertRB")
-		{
+		// }
+		// else if (operation == "insertRB")
+		// {
 
-		}
+		// }
 	}
 }
 
