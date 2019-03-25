@@ -3,7 +3,10 @@
 
 #include "Node.hpp"
 #include <vector>
+#include <stack>
 using namespace std;
+
+// Assume keys are integers and unique
 
 class BinarySearchTree
 {
@@ -91,23 +94,33 @@ public:
 
 		while (e != NULL)
 		{
-			if (e->key() == key)
-			{
-				// Remove element
-				// Consider two cases:
-				// 1. Node to be deleted has one child
-				// 2. Node to be deleted has two children
-				break;
-			}
 			// Traverse
 			if (key < e->key())
 			{
+				if (e->left->key() == key && e->left != NULL) // Checking whether left node contains our key before setting
+				{
+					break;
+				}
 				e = e->left;
 			}
 			else if (key > e->key())
 			{
+				if (e->right->key() == key && e->right != NULL) // Checking whether right node contains our key before setting
+				{
+					break;
+				}
 				e = e->right;
 			}
+		}
+		// We found a parent node whose child node contains the key
+		// Make the child node that contains the key to be NULL
+		if (e->left->key() == key)
+		{
+			e->left = NULL;
+		}
+		else if (e->right->key() == key)
+		{
+			e->right = NULL;
 		}
 	}
 
@@ -148,9 +161,19 @@ public:
 	*/
 	int rangeSum(int left, int right)
 	{
-		vector<int> elements;
-		Node<int> *e = rootNode;
-		return 0;
+		int sum = 0;
+		vector<int> elements = postorder();
+		vector<int> keys;
+		for (auto key : elements) {
+			if (left <= key && key <= right)
+			{
+				keys.push_back(key);
+			}
+		}
+		for (auto key : keys) {
+			sum += key;
+		}
+		return sum;
 	}
 
 	/*
@@ -185,6 +208,30 @@ public:
 	{
 		// If list is empty, print "none"
 		vector<int> order;
+		stack<Node<int>*> nodes;
+
+		if (rootNode == NULL)
+		{
+			return order; // The list is empty
+		}
+
+		nodes.push(rootNode);
+
+		while (!nodes.empty())
+		{
+			Node<int> *e = nodes.top();
+			nodes.pop();
+			order.insert(order.begin(), e->key());
+			if (e->left != NULL)
+			{
+				nodes.push(e->left);
+			}
+			if (e->right != NULL)
+			{
+				nodes.push(e->right);
+			}
+		}
+		
 		return order;
 	}
 

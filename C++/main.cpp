@@ -134,11 +134,11 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			if (bst.searchKey(key))
 			{
 				bst.deleteKey(key);
-				outputfile << "deleted" << endl;
+				outputfile << "deleted" << "\r\n";
 			}
 			else
 			{
-				outputfile << "deletion failed" << endl;
+				outputfile << "deletion failed" << "\r\n";
 			}
 		}
 		else if (operation == "search")
@@ -149,11 +149,11 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			key = stoi(operation);
 			if (bst.searchKey(key))
 			{
-				outputfile << "found" << endl;
+				outputfile << "found" << "\r\n";
 			}
 			else
 			{
-				outputfile << "not found" << endl;
+				outputfile << "not found" << "\r\n";
 			}
 		}
 		else if (operation == "range")
@@ -164,7 +164,7 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			left = stoi(operation);
 			getline(is, operation, ' ');
 			right = stoi(operation);
-			outputfile << "sumRange" << endl;
+			outputfile << bst.rangeSum(left, right) << "\r\n";
 		}
 		else if (operation == "height")
 		{
@@ -174,12 +174,40 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			key = stoi(operation);
 			if (bst.searchKey(key))
 			{
-				outputfile << bst.height(key) << endl;
+				outputfile << bst.height(key) << "\r\n";
 			}
 			else
 			{
-				outputfile << "none" << endl;
+				outputfile << "none" << "\r\n";
 			}
+		}
+		else if (operation == "postorder")
+		{
+
+		}
+		else if (operation == "levelorder")
+		{
+
+		}
+		else if (operation == "lca") 
+		{
+
+		}
+		else if (operation == "floor")
+		{
+
+		}
+		else if (operation == "ceil")
+		{
+
+		}
+		else if (operation == "dist")
+		{
+
+		}
+		else if (operation == "insertRB")
+		{
+
 		}
 	}
 }
