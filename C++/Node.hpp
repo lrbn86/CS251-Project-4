@@ -13,6 +13,7 @@ public:
     left = NULL;
     right = NULL;
   }
+  int height;
   const K& key() const { return _key; }
   void setKey(const K& k) { _key = k; }
   Node *left;

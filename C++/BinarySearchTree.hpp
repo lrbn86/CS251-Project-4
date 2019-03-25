@@ -7,15 +7,15 @@ using namespace std;
 
 class BinarySearchTree
 {
-	// TODO:
 	Node<int> *rootNode;
 
 public:
-	BinarySearchTree() {
+	BinarySearchTree()
+	{
 		rootNode = NULL;
 	}
 	/*
-	// TODO:
+	//
 		1.
 		A new key is always inserted at a leaf.
 		Start searching for a key from the root until we hit a leaf node
@@ -25,57 +25,58 @@ public:
 	{
 		// Search for a leaf node. A leaf node is defined as a node that has no children.
 		// The first node to be inserted will become the root node
-		if (rootNode == NULL) {
+		if (rootNode == NULL)
+		{
 			rootNode = new Node<int>;
-			(*rootNode).setKey(key);
+			rootNode->setKey(key);
+			rootNode->height = 0; // The root always has a height of zero
 			return;
 		}
 
 		// Create a new node and set its key
 		Node<int> *newNode = new Node<int>;
-		(*newNode).setKey(key);
+		newNode->setKey(key);
 
 		Node<int> *e = rootNode; // Provides a mean to traverse the tree
-		
+
 		// TODO: I think I have it so far... Try to implement other methods and
 		// we shall see...
-		while (e != NULL) {
+		while (e != NULL)
+		{
 			// Check whether we reached a leaf node
-			if (!(*e).hasChildren())
+			if (!e->hasChildren())
 			{
 				// Leaf node is reached because this node has no children
 				break;
 			}
-			if (key < (*e).key()) {
-				cout << "Looking at left child." << endl;
-				if ((*e).left == NULL)
-				{
-					break;
-				}
-				e = (*e).left;
-			}
-			else if (key > (*e).key())
+			if (key < e->key())
 			{
-				cout << "Looking at right child." << endl;
-				if ((*e).right == NULL)
+				if ((*e).left == NULL) // Edge case
 				{
 					break;
 				}
-				e = (*e).right;
+				e = e->left;
+			}
+			else if (key > e->key())
+			{
+				if (e->right == NULL) // Edge case
+				{
+					break;
+				}
+				e = e->right;
 			}
 		}
 
 		// If the while-loop terminates, then we reached a leaf node
-		if (key < (*e).key()) {
-			(*e).left = newNode;
-		}
-		else if (key > (*e).key())
+		if (key < e->key())
 		{
-			(*e).right = newNode;
+			e->left = newNode;
 		}
-
+		else if (key > e->key())
+		{
+			e->right = newNode;
+		}
 	}
-
 
 	/*
 		// TODO:
@@ -85,6 +86,29 @@ public:
 	*/
 	void deleteKey(int key)
 	{
+		// Search for a node with the key
+		Node<int> *e = rootNode;
+
+		while (e != NULL)
+		{
+			if (e->key() == key)
+			{
+				// Remove element
+				// Consider two cases:
+				// 1. Node to be deleted has one child
+				// 2. Node to be deleted has two children
+				break;
+			}
+			// Traverse
+			if (key < e->key())
+			{
+				e = e->left;
+			}
+			else if (key > e->key())
+			{
+				e = e->right;
+			}
+		}
 	}
 
 	/*
@@ -93,6 +117,26 @@ public:
 	*/
 	bool searchKey(int key)
 	{
+		int h = 0;
+		Node<int> *e = rootNode;
+		while (e != NULL)
+		{
+			if (e->key() == key)
+			{
+				e->height = h;
+				return true;
+			}
+			// Traverse
+			if (key < e->key())
+			{
+				e = e->left;
+			}
+			else if (key > e->key())
+			{
+				e = e->right;
+			}
+			h++;
+		}
 		return false;
 	}
 
@@ -104,15 +148,32 @@ public:
 	*/
 	int rangeSum(int left, int right)
 	{
+		vector<int> elements;
+		Node<int> *e = rootNode;
 		return 0;
 	}
 
 	/*
-	// TODO:
 		5.
 	*/
 	int height(int key)
 	{
+		Node<int> *e = rootNode;
+		while (e != NULL)
+		{
+			if (e->key() == key) {
+				return e->height;
+			}
+			// Traverse
+			if (key < e->key())
+			{
+				e = e->left;
+			}
+			else if (key > e->key())
+			{
+				e = e->right;
+			}
+		}
 		return 0;
 	}
 

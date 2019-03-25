@@ -110,15 +110,12 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 	int N; // n lines to follow
 	getline(inputfile, line);
 	N = stoi(line);
-	outputfile << "N: " << N << endl;
+
 	while (getline(inputfile, line))
 	{
 		istringstream is(line);
 		string operation;
 		getline(is, operation, ' ');
-
-		outputfile << operation << endl;
-
 		// Basic Operations, 10pts
 		if (operation == "insert")
 		{
@@ -127,7 +124,6 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			getline(is, operation, ' ');
 			key = stoi(operation);
 			bst.insertKey(key);
-			bst.printKeys();
 		}
 		else if (operation == "delete")
 		{
@@ -135,6 +131,15 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			int key;
 			getline(is, operation, ' ');
 			key = stoi(operation);
+			if (bst.searchKey(key))
+			{
+				bst.deleteKey(key);
+				outputfile << "deleted" << endl;
+			}
+			else
+			{
+				outputfile << "deletion failed" << endl;
+			}
 		}
 		else if (operation == "search")
 		{
@@ -142,6 +147,14 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			int key;
 			getline(is, operation, ' ');
 			key = stoi(operation);
+			if (bst.searchKey(key))
+			{
+				outputfile << "found" << endl;
+			}
+			else
+			{
+				outputfile << "not found" << endl;
+			}
 		}
 		else if (operation == "range")
 		{
@@ -151,7 +164,7 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			left = stoi(operation);
 			getline(is, operation, ' ');
 			right = stoi(operation);
-
+			outputfile << "sumRange" << endl;
 		}
 		else if (operation == "height")
 		{
@@ -159,6 +172,14 @@ void read_part_2(ifstream &inputfile, ofstream &outputfile)
 			int key;
 			getline(is, operation, ' ');
 			key = stoi(operation);
+			if (bst.searchKey(key))
+			{
+				outputfile << bst.height(key) << endl;
+			}
+			else
+			{
+				outputfile << "none" << endl;
+			}
 		}
 	}
 }
